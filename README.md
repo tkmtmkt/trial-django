@@ -5,7 +5,8 @@ python:3.11.11-slim
 
 ```sh
 # アプリケーションコンテナ作成
-docker build -t trial-django_app:0.1 docker/app
+docker build -f containers/app/Dockerfile -t trial-django_app:0.1 .
+docker build -f conteiners/nginx/Dockerfile -t trial-django_web:0.1 .
 
 # アプリケーションコンテナ実行
 docker run -it --rm \

@@ -1,0 +1,31 @@
+version: '3'
+services:
+  app:
+    hostname: "app"
+    build:
+      context: "./app"
+      dockerfile: "./container/app/Dockerfile"
+    env_file:
+      - ".env"
+    tty: true
+    volumes:
+      - "./:/code"
+  web:
+    hostname: "web"
+    build:
+      context: "./web"
+      dockerfile: "./container/nginx/Dockerfile"
+    env_file:
+      - ".env"
+    tty: true
+    volumes:
+      - "./:/code"
+  doc:
+    image: "sphinxdoc/sphinx:5.0.1"
+    tty: true
+    volumes:
+      - "./docs:/docs"
+  dev:
+    image: rycus86/pycharm
+  dev2:
+    image: ahmadnassri/vscode-server
