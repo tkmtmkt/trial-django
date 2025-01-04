@@ -9,7 +9,7 @@ services:
       - ".env"
     tty: true
     volumes:
-      - "./:/code"
+      - "./src:/code"
   web:
     hostname: "web"
     build:
@@ -19,7 +19,7 @@ services:
       - ".env"
     tty: true
     volumes:
-      - "./:/code"
+      - "./src:/code"
   doc:
     image: "sphinxdoc/sphinx:5.0.1"
     tty: true

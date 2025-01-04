@@ -8,11 +8,9 @@ set -o nounset
 set -o pipefail
 set -o verbose
 
-# アプリケーションコンテナ実行
+# Sphinxコンテナ実行
 cd ${BASE_DIR}
 docker run -it --rm     \
-    -h trial-django_app \
-    -p "3000:8000"      \
-    -v "./src/:/code/"  \
-    -w "/code"          \
-    trial-django_app /bin/bash
+    -h sphinx           \
+    -v "./docs/:/docs/" \
+    sphinxdoc/sphinx:5.0.1 /bin/bash
