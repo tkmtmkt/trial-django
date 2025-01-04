@@ -12,4 +12,4 @@ COPY Pipfile.lock .
 RUN pip install --upgrade pip pipenv \
   && pipenv install --system --deploy
 
-COPY . /code/
+#COPY ./src /code/
