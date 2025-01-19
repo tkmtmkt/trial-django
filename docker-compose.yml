@@ -1,31 +1,39 @@
 version: '3'
+name: trial-django
 services:
   app:
-    hostname: "app"
+    hostname: app
     build:
-      context: "."
-      dockerfile: "./container/app/Dockerfile"
+      context: "./container/app"
     env_file:
       - ".env"
     tty: true
     volumes:
-      - "./src:/code"
+      - "./containers/app/code/:/code/"
+      - "./containers/app/data/:/data/"
   web:
-    hostname: "web"
+    hostname: web
     build:
-      context: "."
-      dockerfile: "./container/nginx/Dockerfile"
+      context: "./container/nginx"
     env_file:
       - ".env"
     tty: true
     volumes:
-      - "./src:/code"
-  doc:
-    image: "sphinxdoc/sphinx:5.0.1"
+      - "./container/app/data/:/data/"
+    depends_on:
+      - app
+  sphinx:
+    image: sphinxdoc/sphinx
     tty: true
     volumes:
-      - "./docs:/docs"
-  dev:
-    image: rycus86/pycharm
-  dev2:
+      - "./docs/:/docs/"
+    profiles:
+      - dev_tool
+  vscode:
     image: ahmadnassri/vscode-server
+    profiles:
+      - dev_tool
+  pycharm:
+    image: rycus86/pycharm
+    profiles:
+      - dev_tool

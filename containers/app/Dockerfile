@@ -6,9 +6,9 @@ ENV LANG=ja_JP.UTF-8
 
 WORKDIR /code
 
-#COPY ./src/ /code/
-COPY ./src/Pipfile .
-COPY ./src/Pipfile.lock .
+#COPY ./code/ /code/
+COPY ./code/Pipfile .
+COPY ./code/Pipfile.lock .
 
 RUN pip install --upgrade pip pipenv \
   && pipenv install --system --deploy

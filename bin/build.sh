@@ -9,9 +9,13 @@ set -o pipefail
 set -o verbose
 
 # アプリケーションコンテナ作成
-docker build -f ${BASE_DIR}/containers/app/Dockerfile \
-             -t trial-django_app \
-             ${BASE_DIR}/.
-docker build -f ${BASE_DIR}/containers/nginx/Dockerfile \
-             -t trial-django_web \
-             ${BASE_DIR}/.
+# docker comose build
+cd ${BASE_DIR}
+docker build -t trial-django_app \
+             ${BASE_DIR}/containers/app
+docker build -t trial-django_web \
+             ${BASE_DIR}/containers/nginx
+
+VERSION=$(date +%Y%m%d-%H%M)
+docker tag trial-django_app:latest trial-django_app:${VERSION}
+docker tag trial-django_web:latest trial-django_web:${VERSION}

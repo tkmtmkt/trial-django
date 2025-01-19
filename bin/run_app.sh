@@ -9,10 +9,12 @@ set -o pipefail
 set -o verbose
 
 # アプリケーションコンテナ実行
+# docker compose run --rm app $@
 cd ${BASE_DIR}
 docker run -it --rm     \
     -h trial-django_app \
     -p "3000:8000"      \
-    -v "./src/:/code/"  \
+    -v "./containers/app/code/:/code/" \
+    -v "./containers/app/data/:/data/" \
     -w "/code"          \
-    trial-django_app /bin/bash
+    trial-django_app $@

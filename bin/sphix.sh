@@ -9,8 +9,10 @@ set -o pipefail
 set -o verbose
 
 # Sphinxコンテナ実行
+# docker compose run --rm sphinx $@
 cd ${BASE_DIR}
 docker run -it --rm     \
     -h sphinx           \
     -v "./docs/:/docs/" \
-    sphinxdoc/sphinx:5.0.1 /bin/bash
+    -v "./containers/app/code/:/code/" \
+    sphinxdoc/sphinx-latexpdf $@
