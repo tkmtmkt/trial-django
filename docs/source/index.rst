@@ -10,6 +10,25 @@ Welcome to trial_django's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+  # シーケンス図サンプル
+.. uml::
+   :scale: 50 %
+   :align: center
+
+   @startuml
+
+      actor User
+
+      User -> Form : Input user information
+      activate Form
+      Form -> Database : Register user information
+      activate Database
+      Form <- Database : Inform success
+      deactivate Database
+      User <- Form : Show success message
+      deactivate Form
+
+   @enduml
 
 
 Indices and tables
