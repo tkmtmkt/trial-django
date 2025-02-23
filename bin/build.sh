@@ -8,17 +8,21 @@ set -o nounset
 set -o pipefail
 set -o verbose
 
-# アプリケーションコンテナ作成
-# docker comose build
-cd ${BASE_DIR}
-docker build -t trial-django_app \
-             ${BASE_DIR}/containers/app
-docker build -t trial-django_web \
-             ${BASE_DIR}/containers/nginx
-docker build -t trial-django_sphinx \
-             ${BASE_DIR}/containers/sphinx
+PROJECT="trial-django"
 
-VERSION=$(date +%Y%m%d-%H%M)
-docker tag trial-django_app:latest trial-django_app:${VERSION}
-docker tag trial-django_web:latest trial-django_web:${VERSION}
-docker tag trial-django_sphinx:latest trial-django_sphinx:${VERSION}
+build_image () {
+  SERVICE=$1
+  TAG="${PROJECT}-${SERVICE}"
+  # アプリケーションコンテナ作成
+  IMAGE_ID_OLD=$(docker image list -q ${TAG}:latest)
+  docker-compose build ${SERVICE}
+  IMAGE_ID_NEW=$(docker image list -q ${TAG}:latest)
+
+  if [ $IMAGE_ID_NEW != $IMAGE_ID_OLD ]; then
+    VERSION=$(date +%Y%m%d-%H%M)
+    docker tag ${TAG}:latest ${TAG}:${VERSION}
+  fi
+}
+
+build_image app
+build_image web

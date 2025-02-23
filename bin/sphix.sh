@@ -9,10 +9,5 @@ set -o pipefail
 set -o verbose
 
 # Sphinxコンテナ実行
-# docker compose run --rm trial-django_sphinx $@
 cd ${BASE_DIR}
-docker run -it --rm     \
-    -h sphinx           \
-    -v "./docs/:/docs/" \
-    -v "./containers/app/code/:/code/" \
-    trial-django_sphinx $@
+docker compose run --rm sphinx "$@"

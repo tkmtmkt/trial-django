@@ -1,39 +1,73 @@
-version: '3'
+version: "3"
 name: trial-django
 services:
   app:
     hostname: app
+    extends:
+      service: common
+      file: docker-compose-common.yml
     build:
-      context: "./container/app"
+      context: ./containers/app
+    user: ${PGID:-1000}:${PUID:-1000}
     env_file:
-      - ".env"
-    tty: true
-    volumes:
-      - "./containers/app/code/:/code/"
-      - "./containers/app/data/:/data/"
+      - .env
+    environment:
+      - DEBUG=${DEBUG:-True}
   web:
     hostname: web
     build:
-      context: "./container/nginx"
+      context: ./containers/nginx
     env_file:
-      - ".env"
-    tty: true
-    volumes:
-      - "./container/app/data/:/data/"
+      - .env
     depends_on:
       - app
+  vscode:
+    hostname: vscode
+    extends:
+      service: common
+      file: docker-compose-common.yml
+    image: lscr.io/linuxserver/openvscode-server:latest
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID:-"1000"}
+      - PGID=${PGID:-"1000"}
+      - TZ=Asia/Tokyo
+      - CONNECTION_TOKEN=       #optional
+      - CONNECTION_SECRET=      #optional
+      - SUDO_PASSWORD=password  #optional
+      - SUDO_PASSWORD_HASH=     #optional
+    ports:
+      - "3000:3000"
+    volumes:
+      - ${HOME}/workspace/config/:/config/
+    profiles:
+      - dev_tool
+  obsidian:
+    hostname: obsidian
+    extends:
+      service: common
+      file: docker-compose-common.yml
+    image: lscr.io/linuxserver/obsidian:latest
+    restart: unless-stopped
+    security_opt:
+      - seccomp:unconfined #optional
+    shm_size: "1gb"
+    environment:
+      - PUID=${PUID:-"1000"}
+      - PGID=${PGID:-"1000"}
+      - TZ=Asia/Tokyo
+    ports:
+      - 3000:3000
+      - 3001:3001
+    volumes:
+      - ${HOME}/workspace/config/:/config/
+    devices:
+      - /dev/dri:/dev/dri #optional
+    profiles:
+      - dev_tool
   sphinx:
     image: sphinxdoc/sphinx
-    tty: true
     volumes:
-      - "./docs/:/docs/"
-    profiles:
-      - dev_tool
-  vscode:
-    image: ahmadnassri/vscode-server
-    profiles:
-      - dev_tool
-  pycharm:
-    image: rycus86/pycharm
+      - ./docs/:/docs/
     profiles:
       - dev_tool

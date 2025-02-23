@@ -31,11 +31,11 @@ release = '0.1'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-        'sphinx.ext.autodoc',  # ソースコード読み込み用
+        'sphinx.ext.autodoc',   # ソースコード読み込み用
         'sphinx.ext.viewcode',  # ハイライト済みのソースコードへのリンクを追加
-        'sphinx.ext.todo',  # ToDoアイテムのサポート
-        'sphinx.ext.napoleon',#googleスタイルやNumpyスタイルでdocstringを記述した際に必要
-         'sphinxcontrib.plantuml' # sphinxcontrib.plantuml モジュールを読み込む
+        'sphinx.ext.napoleon',  # googleスタイルやNumpyスタイルでdocstringを記述した際に必要
+        'sphinx.ext.todo',      # ToDoアイテムのサポート
+        'sphinxcontrib.plantuml'# sphinxcontrib.plantuml モジュールを読み込む
 ]
 plantuml = 'java -jar /usr/local/bin/plantuml.jar' # plantuml.jarのパス
 extensions = [

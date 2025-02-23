@@ -8,9 +8,9 @@ set -o nounset
 set -o pipefail
 set -o verbose
 
-export PUID=$(id -u)
-export PGID=$(id -g)
-
-# appコンテナ実行
 cd ${BASE_DIR}
-docker-compose run --rm app "$@"
+if [[ ${DEBUG:-"False"} == "True" ]]; then
+  pipenv run python manage.py runserver
+else
+  pipenv run gunicorn config.wsgi --bind 0.0.0.0:8000
+fi
