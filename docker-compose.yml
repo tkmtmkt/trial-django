@@ -13,16 +13,43 @@ services:
       - .env
     environment:
       - DEBUG=${DEBUG:-True}
+    ports:
+      - "8000:8000"
   web:
     hostname: web
     build:
       context: ./containers/nginx
     env_file:
       - .env
+    ports:
+      - "80:80"
     depends_on:
       - app
   vscode:
     hostname: vscode
+    extends:
+      service: common
+      file: docker-compose-common.yml
+    image: lscr.io/linuxserver/code-server:latest
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID:-"1000"}
+      - PGID=${PGID:-"1000"}
+      - TZ=Asia/Tokyo
+      - PASSWORD=password                   #optional
+      - HASHED_PASSWORD=                    #optional
+      - SUDO_PASSWORD=password              #optional
+      - SUDO_PASSWORD_HASH=                 #optional
+      - PROXY_DOMAIN=code-server.my.domain  #optional
+      - DEFAULT_WORKSPACE=/config/workspace #optional
+    ports:
+      - "3000:8443"
+    volumes:
+      - /home/${USER}/workspace/config/:/config/
+    profiles:
+      - dev_tool
+  openvscode:
+    hostname: openvscode
     extends:
       service: common
       file: docker-compose-common.yml
@@ -39,7 +66,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ${HOME}/workspace/config/:/config/
+      - /home/${USER}/workspace/config/:/config/
     profiles:
       - dev_tool
   obsidian:
@@ -60,7 +87,7 @@ services:
       - 3000:3000
       - 3001:3001
     volumes:
-      - ${HOME}/workspace/config/:/config/
+      - /home/${USER}/workspace/config/:/config/
     devices:
       - /dev/dri:/dev/dri #optional
     profiles:

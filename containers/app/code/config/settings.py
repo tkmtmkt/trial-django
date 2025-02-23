@@ -118,7 +118,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = '/data/static'                # 静的ファイルを集める場所（STATIC_ROOT）を指定
+STATIC_FILESDIRS = [BASE_DIR / 'assets']    # 追加の静的ファイル探索パス
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
