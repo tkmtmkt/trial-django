@@ -1,7 +1,0 @@
-services:
-  common:
-    tty: true
-    volumes:
-      - /home/${USER}/:/home/${USER}/
-      - ./containers/app/code/:/code/
-      - ./containers/app/data/:/data/

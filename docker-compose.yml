@@ -3,35 +3,35 @@ name: trial-django
 services:
   app:
     hostname: app
-    extends:
-      service: common
-      file: docker-compose-common.yml
     build:
       context: ./containers/app
-    user: ${PGID:-1000}:${PUID:-1000}
     env_file:
       - .env
     environment:
+      - PUID=${PUID:-"1000"}
+      - PGID=${PGID:-"1000"}
       - DEBUG=${DEBUG:-True}
+    volumes:
+      - ./containers/app/code/:/code/
+      - ./containers/app/data/:/data/
     ports:
       - "8000:8000"
+    tty: true
   web:
     hostname: web
     build:
       context: ./containers/nginx
     env_file:
       - .env
+    volumes:
+      - ./containers/app/data/:/data/
     ports:
       - "80:80"
     depends_on:
       - app
   vscode:
     hostname: vscode
-    extends:
-      service: common
-      file: docker-compose-common.yml
     image: lscr.io/linuxserver/code-server:latest
-    restart: unless-stopped
     environment:
       - PUID=${PUID:-"1000"}
       - PGID=${PGID:-"1000"}
@@ -45,16 +45,14 @@ services:
     ports:
       - "3000:8443"
     volumes:
-      - /home/${USER}/workspace/config/:/config/
+      - ./containers/share/config/:/config/
+      - ./:/config/workspace/trial-django/
+    restart: unless-stopped
     profiles:
       - dev_tool
   openvscode:
     hostname: openvscode
-    extends:
-      service: common
-      file: docker-compose-common.yml
     image: lscr.io/linuxserver/openvscode-server:latest
-    restart: unless-stopped
     environment:
       - PUID=${PUID:-"1000"}
       - PGID=${PGID:-"1000"}
@@ -66,19 +64,14 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - /home/${USER}/workspace/config/:/config/
+      - ./containers/share/config/:/config/
+      - ./:/config/workspace/trial-django/
+    restart: unless-stopped
     profiles:
       - dev_tool
   obsidian:
     hostname: obsidian
-    extends:
-      service: common
-      file: docker-compose-common.yml
     image: lscr.io/linuxserver/obsidian:latest
-    restart: unless-stopped
-    security_opt:
-      - seccomp:unconfined #optional
-    shm_size: "1gb"
     environment:
       - PUID=${PUID:-"1000"}
       - PGID=${PGID:-"1000"}
@@ -87,14 +80,20 @@ services:
       - 3000:3000
       - 3001:3001
     volumes:
-      - /home/${USER}/workspace/config/:/config/
+      - ./containers/share/config/:/config/
+      - ./:/config/workspace/trial-django/
     devices:
       - /dev/dri:/dev/dri #optional
+    security_opt:
+      - seccomp:unconfined #optional
+    shm_size: "1gb"
+    restart: unless-stopped
     profiles:
       - dev_tool
   sphinx:
     image: sphinxdoc/sphinx
     volumes:
+      - ./containers/app/code/:/code/
       - ./docs/:/docs/
     profiles:
       - dev_tool
