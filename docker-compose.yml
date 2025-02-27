@@ -8,14 +8,14 @@ services:
     env_file:
       - .env
     environment:
-      - PUID=${PUID:-"1000"}
-      - PGID=${PGID:-"1000"}
+      - PUID=${PUID:-"20000"}
+      - PGID=${PGID:-"20000"}
       - DEBUG=${DEBUG:-True}
+    ports:
+      - "8000:8000"
     volumes:
       - ./containers/app/code/:/code/
       - ./containers/app/data/:/data/
-    ports:
-      - "8000:8000"
     tty: true
   web:
     hostname: web
@@ -23,18 +23,18 @@ services:
       context: ./containers/nginx
     env_file:
       - .env
-    volumes:
-      - ./containers/app/data/:/data/
     ports:
       - "80:80"
+    volumes:
+      - ./containers/app/data/:/data/
     depends_on:
       - app
   vscode:
     hostname: vscode
-    image: lscr.io/linuxserver/code-server:latest
+    image: linuxserver/code-server:latest
     environment:
-      - PUID=${PUID:-"1000"}
-      - PGID=${PGID:-"1000"}
+      - PUID=${PUID:-"20000"}
+      - PGID=${PGID:-"20000"}
       - TZ=Asia/Tokyo
       - PASSWORD=password                   #optional
       - HASHED_PASSWORD=                    #optional
@@ -45,17 +45,18 @@ services:
     ports:
       - "3000:8443"
     volumes:
-      - ./containers/share/config/:/config/
-      - ./:/config/workspace/trial-django/
+      - /home/${USER}/vscode/:/config/
+      - ./containers/app/code/:/code/
+      - ./containers/app/data/:/data/
     restart: unless-stopped
     profiles:
       - dev_tool
   openvscode:
     hostname: openvscode
-    image: lscr.io/linuxserver/openvscode-server:latest
+    image: linuxserver/openvscode-server:latest
     environment:
-      - PUID=${PUID:-"1000"}
-      - PGID=${PGID:-"1000"}
+      - PUID=${PUID:-"20000"}
+      - PGID=${PGID:-"20000"}
       - TZ=Asia/Tokyo
       - CONNECTION_TOKEN=       #optional
       - CONNECTION_SECRET=      #optional
@@ -64,24 +65,27 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./containers/share/config/:/config/
-      - ./:/config/workspace/trial-django/
+      - /home/${USER}/openvscode/:/config/
+      - ./containers/app/code/:/code/
+      - ./containers/app/data/:/data/
     restart: unless-stopped
     profiles:
       - dev_tool
   obsidian:
     hostname: obsidian
-    image: lscr.io/linuxserver/obsidian:latest
+    image: linuxserver/obsidian:latest
     environment:
-      - PUID=${PUID:-"1000"}
-      - PGID=${PGID:-"1000"}
+      - PUID=${PUID:-"20000"}
+      - PGID=${PGID:-"20000"}
       - TZ=Asia/Tokyo
     ports:
       - 3000:3000
       - 3001:3001
     volumes:
-      - ./containers/share/config/:/config/
-      - ./:/config/workspace/trial-django/
+      - /home/${USER}/:/config/
+      - /home/${USER}/obsidian/:/config/
+      - ./containers/app/code/:/code/
+      - ./containers/app/data/:/data/
     devices:
       - /dev/dri:/dev/dri #optional
     security_opt:

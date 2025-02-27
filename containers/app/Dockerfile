@@ -1,7 +1,11 @@
-FROM python:3.12.9-slim
+FROM python:3.12.9-alpine
 LABEL maintainer="Takamatsu Makoto <tkmtmkt@gmail.com>"
 
-ENV LANG=ja_JP.UTF-8
+# OSパッケージインストール
+RUN apk add --no-cache \
+    su-exec \
+    shadow
+
 # PYTHONDONTWRITEBYTECODEとPYTHONUNBUFFEREDはオプション
 # pycファイル(および__pycache__)の生成を行わないようにする
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -10,23 +14,24 @@ ENV PYTHONUNBUFFERED=1
 
 # pip更新、pipenvインストール
 ENV PIP_TRUSTED_HOST="pypi.org pypi.python.org files.pythonhosted.org"
-RUN pip install --upgrade pip pipenv
+RUN pip install --no-cache-dir --upgrade \
+    pip \
+    pipenv
 
 # 実行ユーザ追加
-RUN useradd -u 1234 -o -m django && \
-    groupmod -g 1234 django
+RUN useradd -u 20000 -o code
+
+WORKDIR /code
 
 # プログラムコピー
-WORKDIR /code
 COPY ./code/ /code/
-COPY ./docker-entrypoint.sh /docker-entrypoint.sh
-RUN mkdir /data && \
-    chown -R django:django /code /data && \
-    chmod a+x /docker-entrypoint.sh
+RUN mkdir /data \
+ && chown -R code:code /code
 
 # Pythonパッケージインストール
 ENV PIPENV_VENV_IN_PROJECT=1
-RUN su django -c "pipenv install --deploy"
+RUN su-exec code pipenv install --deploy
 
+COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/code/bin/run.sh"]
