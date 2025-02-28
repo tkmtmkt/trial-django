@@ -10,4 +10,4 @@ set -o verbose
 
 # appコンテナでコマンド実行
 cd ${BASE_DIR}
-docker-compose exec app "$@"
+docker-compose exec -it app "$@"

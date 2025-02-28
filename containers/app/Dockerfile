@@ -19,18 +19,19 @@ RUN pip install --no-cache-dir --upgrade \
     pipenv
 
 # 実行ユーザ追加
-RUN useradd -u 20000 -o code
+RUN useradd -u 20000 -m code
 
 WORKDIR /code
 
 # プログラムコピー
 COPY ./code/ /code/
 RUN mkdir /data \
- && chown -R code:code /code
+ && chown -R code:code /code /data
 
 # Pythonパッケージインストール
 ENV PIPENV_VENV_IN_PROJECT=1
-RUN su-exec code pipenv install --deploy
+RUN su-exec code pipenv install --deploy --extra-pip-args="--no-cache-dir" \
+ && rm -rf /home/code/.local/share/virtualenv/
 
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]

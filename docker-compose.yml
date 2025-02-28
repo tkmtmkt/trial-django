@@ -7,16 +7,11 @@ services:
       context: ./containers/app
     env_file:
       - .env
-    environment:
-      - PUID=${PUID:-"20000"}
-      - PGID=${PGID:-"20000"}
-      - DEBUG=${DEBUG:-True}
     ports:
       - "8000:8000"
     volumes:
       - ./containers/app/code/:/code/
       - ./containers/app/data/:/data/
-    tty: true
   web:
     hostname: web
     build:
@@ -45,7 +40,8 @@ services:
     ports:
       - "3000:8443"
     volumes:
-      - /home/${USER}/vscode/:/config/
+      - /home/${USER}/workspace/config/:/config/
+      - /home/${USER}/workspace/:/config/workspace/
       - ./containers/app/code/:/code/
       - ./containers/app/data/:/data/
     restart: unless-stopped
@@ -65,7 +61,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - /home/${USER}/openvscode/:/config/
+      - /home/${USER}/workspace/config/:/config/
+      - /home/${USER}/workspace/:/config/workspace/
       - ./containers/app/code/:/code/
       - ./containers/app/data/:/data/
     restart: unless-stopped
@@ -82,8 +79,8 @@ services:
       - 3000:3000
       - 3001:3001
     volumes:
-      - /home/${USER}/:/config/
-      - /home/${USER}/obsidian/:/config/
+      - /home/${USER}/workspace/config/:/config/
+      - /home/${USER}/workspace/:/config/workspace/
       - ./containers/app/code/:/code/
       - ./containers/app/data/:/data/
     devices:

@@ -8,9 +8,6 @@ set -o nounset
 set -o pipefail
 set -o verbose
 
-export PUID=$(id -u)
-export PGID=$(id -g)
-
 # appコンテナ実行
 cd ${BASE_DIR}
-docker-compose run --rm app "$@"
+docker-compose run --rm -it app "$@"
