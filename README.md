@@ -24,6 +24,10 @@ gunicorn config.wsgi -b 0
 ```
 
 ```sh
+$ jupyter notebook --generate-config
+```
+
+```sh
 # Sphinxコンテナ実行
 bin/sphinx.sh
 

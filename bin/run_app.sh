@@ -6,7 +6,7 @@ set -o errexit
 set -o errtrace
 set -o nounset
 set -o pipefail
-set -o verbose
+#set -o verbose
 
 # appコンテナ実行
 cd ${BASE_DIR}

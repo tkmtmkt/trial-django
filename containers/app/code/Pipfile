@@ -11,7 +11,11 @@ apscheduler = "~=3.11"
 
 [dev-packages]
 pytest-django = "~=4.10"
+pytest-mock = "~=3.14"
+pytest-cov = "~=6.0"
 ruff = "~=0.9"
+jupyter = "~=1.1"
+jupyterlab-language-pack-ja-jp = "~=4.3"
 folium = "~=0.19"
 skyfield = "~=1.50"
 
