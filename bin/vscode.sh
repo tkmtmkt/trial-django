@@ -8,8 +8,10 @@ set -o nounset
 set -o pipefail
 #set -o verbose
 
+CMD=${1:-start}
+
 cd ${BASE_DIR}
-case "$1" in
+case "$CMD" in
   start)
     # コンテナ実行
     docker-compose up vscode

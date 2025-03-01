@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 set -o errexit
 set -o errtrace
 set -o nounset
@@ -16,7 +16,7 @@ if [ $(id -u) = 0 ]; then
 
   chown -R ${GROUP_ID}:${USER_ID} /code /data
 
-  exec su-exec ${USER} "$@"
+  exec gosu ${USER} "$@"
 fi
 
 exec "$@"

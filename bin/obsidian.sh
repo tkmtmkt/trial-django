@@ -14,16 +14,13 @@ cd ${BASE_DIR}
 case "$CMD" in
   start)
     # コンテナ実行
-    docker-compose up openvscode
+    docker-compose up obsidian
     ;;
   stop)
     # コンテナ停止
-    docker-compose down openvscode
+    docker-compose down obsidian
     ;;
   *)
     echo "Usage: $0 [ start | stop ]"
     ;;
 esac
-
-cd ${BASE_DIR}
-docker-compose up openvscode "$@"

@@ -24,6 +24,17 @@ services:
       - ./containers/app/data/:/data/
     depends_on:
       - app
+  notebook:
+    hostname: notebook
+    image: trial-django-app
+    env_file:
+      - .env
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./containers/app/code/:/code/
+      - ./containers/app/data/:/data/
+    command: ["pipenv", ""]
   vscode:
     hostname: vscode
     image: linuxserver/code-server:latest

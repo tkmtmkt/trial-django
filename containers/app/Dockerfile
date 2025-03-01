@@ -1,10 +1,11 @@
-FROM python:3.12.9-alpine
+FROM python:3.12.9-slim
 LABEL maintainer="Takamatsu Makoto <tkmtmkt@gmail.com>"
 
 # OSパッケージインストール
-RUN apk add --no-cache \
-    su-exec \
-    shadow
+RUN apt-get update && apt-get install -y \
+    gosu \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
 # PYTHONDONTWRITEBYTECODEとPYTHONUNBUFFEREDはオプション
 # pycファイル(および__pycache__)の生成を行わないようにする
@@ -30,7 +31,7 @@ RUN mkdir /data \
 
 # Pythonパッケージインストール
 ENV PIPENV_VENV_IN_PROJECT=1
-RUN su-exec code pipenv install --deploy --extra-pip-args="--no-cache-dir" \
+RUN gosu code pipenv install --deploy --extra-pip-args="--no-cache-dir" \
  && rm -rf /home/code/.local/share/virtualenv/
 
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
