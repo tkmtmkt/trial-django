@@ -163,3 +163,5 @@ cython_debug/
 
 # add
 containers/data/
+containers/jupyterlab/
+containers/sphinx/
