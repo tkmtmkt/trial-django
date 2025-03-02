@@ -24,7 +24,7 @@ services:
       - ./containers/app/data/:/data/
     depends_on:
       - app
-  notebook:
+  jupyterlab:
     hostname: notebook
     image: trial-django-app
     env_file:
@@ -32,10 +32,10 @@ services:
     ports:
       - "3000:8888"
     volumes:
-      - /home/${USER}/workspace/config/:/home/code/
+      - ./containers/jupyterlab/home/code/:/home/code/
       - ./containers/app/code/:/code/
       - ./containers/app/data/:/data/
-    command: ["pipenv", "run", "jupyter", "notebook", "--ip=*", "--no-browser"]
+    command: ["pipenv", "run", "jupyter", "lab", "--ip=*"]
   vscode:
     hostname: vscode
     image: linuxserver/code-server:latest
