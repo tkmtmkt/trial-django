@@ -20,7 +20,10 @@ services:
       - .env
     ports:
       - "80:80"
+      - "443:443"
     volumes:
+      - ./containers/nginx/etc/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+      - ./containers/nginx/etc/ssl/private/:/etc/ssl/private/
       - ./containers/data/:/data/
     depends_on:
       - app

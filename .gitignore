@@ -163,5 +163,6 @@ cython_debug/
 
 # add
 containers/data/
+containers/nginx/etc/ssl/private/
 containers/jupyterlab/
 containers/sphinx/
