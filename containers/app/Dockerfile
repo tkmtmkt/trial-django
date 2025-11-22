@@ -32,6 +32,7 @@ RUN mkdir /data \
  && chown -R code:code /code /data
 
 # Pythonパッケージインストール
+ENV UV_LINK_MODE=copy
 RUN --mount=type=cache,target=/home/code/.local/share/virtualenv <<'EOF'
 gosu code uv sync
 EOF
