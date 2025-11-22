@@ -2,10 +2,12 @@ FROM python:3.12.9-slim
 LABEL maintainer="Takamatsu Makoto <tkmtmkt@gmail.com>"
 
 # OSパッケージインストール
-RUN apt-get update && apt-get install -y \
-    gosu \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+RUN --mount=type=cache,target=/var/lib/apt/lists <<'EOF'
+apt-get update
+apt-get install -y \
+        gosu
+apt-get clean
+EOF
 
 # PYTHONDONTWRITEBYTECODEとPYTHONUNBUFFEREDはオプション
 # pycファイル(および__pycache__)の生成を行わないようにする
@@ -31,8 +33,9 @@ RUN mkdir /data \
 
 # Pythonパッケージインストール
 ENV PIPENV_VENV_IN_PROJECT=1
-RUN gosu code pipenv install --deploy --extra-pip-args="--no-cache-dir" \
- && rm -rf /home/code/.local/share/virtualenv/
+RUN --mount=type=cache,target=/home/code/.local/share/virtualenv <<'EOF'
+gosu code pipenv install --deploy --extra-pip-args="--no-cache-dir"
+EOF
 
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
