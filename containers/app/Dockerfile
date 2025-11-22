@@ -19,7 +19,7 @@ ENV PYTHONUNBUFFERED=1
 ENV PIP_TRUSTED_HOST="pypi.org pypi.python.org files.pythonhosted.org"
 RUN pip install --no-cache-dir --upgrade \
     pip \
-    pipenv
+    uv
 
 # 実行ユーザ追加
 RUN useradd -u 20000 -m code
@@ -32,9 +32,8 @@ RUN mkdir /data \
  && chown -R code:code /code /data
 
 # Pythonパッケージインストール
-ENV PIPENV_VENV_IN_PROJECT=1
 RUN --mount=type=cache,target=/home/code/.local/share/virtualenv <<'EOF'
-gosu code pipenv install --deploy --extra-pip-args="--no-cache-dir"
+gosu code uv sync
 EOF
 
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
