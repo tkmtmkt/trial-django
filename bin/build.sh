@@ -15,7 +15,7 @@ build_image () {
   TAG="${PROJECT}-${SERVICE}"
   # アプリケーションコンテナ作成
   IMAGE_ID_OLD=$(docker image list -q ${TAG}:latest)
-  docker-compose build ${SERVICE}
+  docker compose build ${SERVICE}
   IMAGE_ID_NEW=$(docker image list -q ${TAG}:latest)
 
   if [ $IMAGE_ID_NEW != $IMAGE_ID_OLD ]; then

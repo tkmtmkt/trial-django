@@ -10,4 +10,4 @@ set -o pipefail
 
 # appコンテナでコマンド実行
 cd ${BASE_DIR}
-docker-compose exec -it app "$@"
+docker compose exec -it app "$@"
