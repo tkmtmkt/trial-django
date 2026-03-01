@@ -1,4 +1,4 @@
-FROM python:3.12.9-slim
+FROM python:3.13.12-slim
 LABEL maintainer="Takamatsu Makoto <tkmtmkt@gmail.com>"
 
 # OSパッケージインストール
@@ -33,8 +33,9 @@ RUN mkdir /data \
 
 # Pythonパッケージインストール
 ENV UV_LINK_MODE=copy
-RUN --mount=type=cache,target=/home/code/.local/share/virtualenv <<'EOF'
+RUN <<'EOF'
 gosu code uv sync
+gosu code uv cache clean
 EOF
 
 COPY ./docker/app/docker-entrypoint.sh /docker-entrypoint.sh

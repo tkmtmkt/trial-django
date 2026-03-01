@@ -162,7 +162,7 @@ cython_debug/
 #.idea/
 
 # add
-docker/data/
+code/data/
 docker/nginx/etc/ssl/private/
 docker/jupyterlab/
 docker/sphinx/

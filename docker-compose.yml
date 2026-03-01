@@ -11,7 +11,6 @@ services:
       - "127.0.0.1:8000:8000"
     volumes:
       - ./code/:/code/
-      - ./docker/data/:/data/
   web:
     hostname: web
     build:
@@ -25,7 +24,7 @@ services:
     volumes:
       - ./docker/nginx/etc/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
       - ./docker/nginx/etc/ssl/private/:/etc/ssl/private/
-      - ./docker/data/:/data/
+      - ./code/data/:/data/
     depends_on:
       - app
   jupyterlab:
@@ -38,7 +37,6 @@ services:
     volumes:
       - ./docker/jupyterlab/home/code/:/home/code/
       - ./code/:/code/
-      - ./docker/data/:/data/
     command: ["pipenv", "run", "jupyter", "lab", "--ip=*"]
     profiles:
       - dev_tool
@@ -61,7 +59,6 @@ services:
       - /home/${USER}/workspace/config/:/config/
       - /home/${USER}/workspace/:/config/workspace/
       - ./code/:/code/
-      - ./docker/data/:/data/
     restart: unless-stopped
     profiles:
       - dev_tool
@@ -82,7 +79,6 @@ services:
       - /home/${USER}/workspace/config/:/config/
       - /home/${USER}/workspace/:/config/workspace/
       - ./code/:/code/
-      - ./docker/data/:/data/
     restart: unless-stopped
     profiles:
       - dev_tool
@@ -100,7 +96,6 @@ services:
       - /home/${USER}/workspace/config/:/config/
       - /home/${USER}/workspace/:/config/workspace/
       - ./code/:/code/
-      - ./docker/data/:/data/
     devices:
       - /dev/dri:/dev/dri #optional
     security_opt:
