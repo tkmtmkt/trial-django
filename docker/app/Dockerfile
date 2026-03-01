@@ -37,6 +37,6 @@ RUN --mount=type=cache,target=/home/code/.local/share/virtualenv <<'EOF'
 gosu code uv sync
 EOF
 
-COPY ./docker-entrypoint.sh /docker-entrypoint.sh
+COPY ./docker/app/docker-entrypoint.sh /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/code/bin/run.sh"]
