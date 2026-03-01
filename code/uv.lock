@@ -287,6 +287,7 @@ dependencies = [
     { name = "django" },
     { name = "djangorestframework" },
     { name = "gunicorn" },
+    { name = "mod-wsgi" },
 ]
 
 [package.dev-dependencies]
@@ -307,6 +308,7 @@ requires-dist = [
     { name = "django", specifier = "~=4.2" },
     { name = "djangorestframework", specifier = "~=3.15" },
     { name = "gunicorn", specifier = "~=23.0" },
+    { name = "mod-wsgi", specifier = "~=5.0" },
 ]
 
 [package.metadata.requires-dev]
@@ -1038,6 +1040,12 @@ sdist = { url = "https://files.pythonhosted.org/packages/d7/02/a7fb8b21d4d55ac93
 wheels = [
     { url = "https://files.pythonhosted.org/packages/7a/f0/8282d9641415e9e33df173516226b404d367a0fc55e1a60424a152913abc/mistune-3.1.4-py3-none-any.whl", hash = "sha256:93691da911e5d9d2e23bc54472892aff676df27a75274962ff9edc210364266d", size = 53481, upload-time = "2025-08-29T07:20:42.218Z" },
 ]
+
+[[package]]
+name = "mod-wsgi"
+version = "5.0.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/ca/4d/275853efa4d2a4efe1614aa0df06295e71f2082cebccc4d40d0f0a551c24/mod_wsgi-5.0.2.tar.gz", hash = "sha256:6fe5557c3ef25c184c2c994905fe52be1c06ae5c46235ecafe558e84789e2159", size = 498627, upload-time = "2024-11-22T08:53:22.752Z" }
 
 [[package]]
 name = "nbclient"

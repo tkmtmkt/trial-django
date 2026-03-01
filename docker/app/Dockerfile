@@ -5,6 +5,8 @@ LABEL maintainer="Takamatsu Makoto <tkmtmkt@gmail.com>"
 RUN --mount=type=cache,target=/var/lib/apt/lists <<'EOF'
 apt-get update
 apt-get install -y \
+        apache2 \
+        apache2-dev \
         gosu
 apt-get clean
 EOF
