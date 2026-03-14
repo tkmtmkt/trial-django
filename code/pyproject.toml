@@ -10,6 +10,7 @@ dependencies = [
     "djangorestframework~=3.16",
     "apscheduler~=3.11",
     "mod_wsgi~=5.0",
+    "pip",
 ]
 
 [dependency-groups]
@@ -22,4 +23,5 @@ dev = [
     "jupyterlab-language-pack-ja-JP~=4.5",
     "folium~=0.20",
     "skyfield~=1.54",
+    "pip-audit",
 ]

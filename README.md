@@ -23,8 +23,13 @@ bin/server.sh
 gunicorn config.wsgi -b 0
 ```
 
+脆弱性チェック
 ```sh
-$ jupyter notebook --generate-config
+uv run --dev pip-audit -r <(uv run pip freeze)
+```
+
+```sh
+jupyter notebook --generate-config
 ```
 
 ```sh
