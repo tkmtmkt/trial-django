@@ -23,6 +23,15 @@ bin/server.sh
 gunicorn config.wsgi -b 0
 ```
 
+Pythonコードフォーマットチェック
+```sh
+# チェックのみ
+uv run --dev ruff check
+
+# チェックして自動整形
+uv run --dev ruff check
+```
+
 脆弱性チェック
 ```sh
 uv run --dev pip-audit -r <(uv run pip freeze)

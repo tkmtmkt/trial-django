@@ -25,3 +25,42 @@ dev = [
     "ruff~=0.15",
     "skyfield~=1.54",
 ]
+
+[tool.ruff]
+# 対象となるPythonバージョン
+target-version = "py313"
+# 1行の最大文字数 (Black準拠)
+line-length = 88
+
+[tool.ruff.lint]
+# 有効にするルールセット (標準+主要プラグイン)
+select = [
+    "E",    # pycodestyle error
+    "W",    # pycodestyle warning
+    "F",    # pyflakes
+    "I",    # isort (import順序整理)
+    "UP",   # pyupgrade (モダンな構文へ更新)
+    "N",    # pep8-naming
+    "B",    # flake8-bugbear
+    "C90",  # mccabe (循環複雑度)
+]
+# 無視するルール
+ignore = []
+
+[tool.ruff.lint.isort]
+# isortの設定 (必要な場合)
+known-first-party = ["src"]
+
+[tool.ruff.format]
+# フォーマッタ設定 (Black互換)
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+
+[tool.ruff.lint.per-file-ignores]
+# 特定のファイルに対するルール除外
+"__init__.py" = ["F401"] # 未使用インポートを許可
+"tests/*" = ["S101"]      # テストコードでassertを許可
+
+[tool.ruff.lint.pycodestyle]
+max-doc-length = 88
