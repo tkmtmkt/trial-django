@@ -313,7 +313,6 @@ dependencies = [
     { name = "django" },
     { name = "djangorestframework" },
     { name = "gunicorn" },
-    { name = "mod-wsgi" },
     { name = "pip" },
 ]
 
@@ -336,7 +335,6 @@ requires-dist = [
     { name = "django", specifier = "~=5.2" },
     { name = "djangorestframework", specifier = "~=3.16" },
     { name = "gunicorn", specifier = "~=25.1" },
-    { name = "mod-wsgi", specifier = "~=5.0" },
     { name = "pip" },
 ]
 
@@ -1135,12 +1133,6 @@ sdist = { url = "https://files.pythonhosted.org/packages/9d/55/d01f0c4b45ade6536
 wheels = [
     { url = "https://files.pythonhosted.org/packages/9b/f7/4a5e785ec9fbd65146a27b6b70b6cdc161a66f2024e4b04ac06a67f5578b/mistune-3.2.0-py3-none-any.whl", hash = "sha256:febdc629a3c78616b94393c6580551e0e34cc289987ec6c35ed3f4be42d0eee1", size = 53598, upload-time = "2025-12-23T11:36:33.211Z" },
 ]
-
-[[package]]
-name = "mod-wsgi"
-version = "5.0.2"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/ca/4d/275853efa4d2a4efe1614aa0df06295e71f2082cebccc4d40d0f0a551c24/mod_wsgi-5.0.2.tar.gz", hash = "sha256:6fe5557c3ef25c184c2c994905fe52be1c06ae5c46235ecafe558e84789e2159", size = 498627, upload-time = "2024-11-22T08:53:22.752Z" }
 
 [[package]]
 name = "msgpack"
