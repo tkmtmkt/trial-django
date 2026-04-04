@@ -5,7 +5,7 @@ set -o errexit
 set -o errtrace
 set -o nounset
 set -o pipefail
-#set -o verbose
+#set -o xtrace
 
 # 実行ユーザ判定
 if [[ $(id -u) -ne 0 ]]; then
