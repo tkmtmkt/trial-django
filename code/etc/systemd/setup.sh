@@ -19,4 +19,4 @@ ln -sf {${SCRIPT_DIR},/etc/systemd}/system/httpd.service.d/override.conf
 ln -sf {${SCRIPT_DIR},/etc/systemd}/system/code.service
 ln -sf {${SCRIPT_DIR},/etc/systemd}/system/code.timer
 systemctl enable code.timer
-systemctl list-unit-files code
+systemctl list-unit-files code*
