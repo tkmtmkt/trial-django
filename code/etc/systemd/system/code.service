@@ -1,0 +1,6 @@
+[Unit]
+Description=code sample servicce
+
+[Service]
+Type=oneshot
+ExecStart=logger "moo moo"
