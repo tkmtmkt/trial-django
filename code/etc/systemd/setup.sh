@@ -16,7 +16,10 @@ fi
 echo -e "### サービス設定"
 mkdir -p /etc/systemd/system/httpd.service.d
 ln -sf {${SCRIPT_DIR},/etc/systemd}/system/httpd.service.d/override.conf
-ln -sf {${SCRIPT_DIR},/etc/systemd}/system/code.service
-ln -sf {${SCRIPT_DIR},/etc/systemd}/system/code.timer
-systemctl enable code.timer
+ln -sf {${SCRIPT_DIR},/etc/systemd}/system/code1.timer
+ln -sf {${SCRIPT_DIR},/etc/systemd}/system/code1.service
+systemctl enable code1.timer
+ln -sf {${SCRIPT_DIR},/etc/systemd}/system/code2.path
+ln -sf {${SCRIPT_DIR},/etc/systemd}/system/code2.service
+systemctl enable code2.path
 systemctl list-unit-files code*

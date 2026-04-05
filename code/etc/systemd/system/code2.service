@@ -1,0 +1,6 @@
+[Unit]
+Description=Sample Path Monitor Service
+
+[Service]
+Type=oneshot
+ExecStart=logger "moo moo"

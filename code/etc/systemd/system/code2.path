@@ -1,0 +1,9 @@
+[Unit]
+Description=Sample Path Monitor Service
+
+[Path]
+DirectoryNotEmpty=/home/setup/code/upload
+Unit=code2.service
+
+[Install]
+WantedBy=multi-user.target
